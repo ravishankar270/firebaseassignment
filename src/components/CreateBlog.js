@@ -7,19 +7,22 @@ import Button from '@mui/material/Button';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+
 function CreateBlog({auth1}) {
   
   const [title, setTitle] = useState("");
   const [postText, setPostText] = useState("");
+  // const [image,setImage]=useState('')
 
   const postsCollectionRef = collection(db, "blogs");
   let navigate = useNavigate();
-  console.log(auth)
+  // console.log(auth)
   const createPost = async () => {
-    if(!title || !postText){
+    if(!title || !postText ){
       toast.error("fields are missing!")
       return
     }
+    // console.log(image)
     await addDoc(postsCollectionRef, {
       title,
       postText,
@@ -70,7 +73,8 @@ function CreateBlog({auth1}) {
           accept="image/*"
             placeholder="Title..."
             onChange={(event) => {
-              setTitle(event.target.value);
+              // console.log(event.target.files[0].name)
+              // setImage(event.target.files[0]);
             }}
           />
         </div>

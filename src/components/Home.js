@@ -9,6 +9,7 @@ import { Audio } from 'react-loader-spinner';
 function Home({auth1,user}) {
   const [postLists, setPostList] = useState([]);
   const postsCollectionRef = collection(db, "blogs");
+  const [deleted,setDeleted]=useState(false)
   let navigate = useNavigate();
   // const deletePost = async (id) => {
   //   const postDoc = doc(db, "posts", id);
@@ -27,7 +28,31 @@ function Home({auth1,user}) {
     getPosts();
   }, []);
 
-    
+  // const deleteBlog=(id)=>{
+  //   console.log('clicked')
+  //   console.log(id)
+  //   // var blog = query(collection(db,'blogs'),where('_id','==',id));
+  //   // getDocs(blog).then(function(querySnapshot) {
+  //   //   querySnapshot.forEach(function(doc) {
+  //   //     console.log('hi')
+  //   //     deleteDoc(doc);
+  //   //     setDeleted(true)
+
+  // // });
+  // const docRef=doc(db,'blogs',id)
+  // deleteDoc(docRef).then(
+  //   ()=>{
+  //     console.log('deleted')
+  //   }
+  // ).catch(
+  //   (error)=>{
+  //     console.log(error)
+  //   }
+  // )
+
+  // }
+
+  
   return (
     <>
     
@@ -59,7 +84,7 @@ function Home({auth1,user}) {
       />
       :
       postLists.map((post=>{
-        return <div style={{display:'flex',flexDirection:'column',width:'100%'}} className='row'><Blog title={post.title} content={post.postText} author={post.author.email} user={user}></Blog></div>
+        return <div style={{display:'flex',flexDirection:'column',width:'100%'}} className='row'><Blog id={post.id} title={post.title} content={post.postText} author={post.author.email} user={user} deleteBlog={false}></Blog></div>
       }))
     }
     </div>

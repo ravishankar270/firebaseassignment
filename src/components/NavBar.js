@@ -20,13 +20,26 @@ import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 import { Link, NavLink } from "react-router-dom";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
+import {signOut} from 'firebase/auth'
+import { auth } from '../firebase-config';
+import { useNavigate } from "react-router-dom";
 
 const settings = ["Login", "Logout"];
 
-const ResponsiveAppBar = ({ user, auth, signout }) => {
+const ResponsiveAppBar = ({ user, auth1, setAuth,setUser}) => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const [selected, setSelected] = React.useState(-1);
+
+  let navigate=useNavigate()
+  const signUserOut=()=>{
+    signOut(auth).then(()=>{
+      localStorage.clear()
+      setAuth(false)
+      setUser('')
+      navigate('/login')
+    })
+  }
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -64,7 +77,7 @@ const ResponsiveAppBar = ({ user, auth, signout }) => {
               variant="h6"
               noWrap
               component="a"
-              href="/"
+              // ="/"
               sx={{
                 mr: 2,
                 display: { xs: "none", md: "flex" },
@@ -75,7 +88,8 @@ const ResponsiveAppBar = ({ user, auth, signout }) => {
                 textDecoration: "none",
               }}
             >
-              Blogs
+              <Link to='/' onClick={()=>selectedButton(-1)} style={{color:selected==-1?'blue': "white", textDecoration: "none" }}>Blogs</Link>
+              
             </Typography>
 
             <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
@@ -197,17 +211,17 @@ const ResponsiveAppBar = ({ user, auth, signout }) => {
             </Box>
 
             <Box sx={{ flexGrow: 0 }}>
-              <Tooltip title="Open settings">
+              <Tooltip title="username">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                   {user ? (
                     <div
                       style={{
-                        backgroundColor: "gray",
-                        borderRadius: "50%",
-                        width: "35px",
+                        
+                        fontSize:'15px',
+
                       }}
                     >
-                      {user[0]}
+                      {user}
                     </div>
                   ) : (
                     <span
@@ -239,7 +253,7 @@ const ResponsiveAppBar = ({ user, auth, signout }) => {
                 onClose={handleCloseUserMenu}
               >
                 {" "}
-                {!auth ? (
+                {!auth1 ? (
                   <MenuItem key="login" onClick={handleCloseUserMenu}>
                     <Typography textAlign="center">
                       <Link
@@ -255,7 +269,7 @@ const ResponsiveAppBar = ({ user, auth, signout }) => {
                     <Typography textAlign="center">
                       <Link
                         style={{ color: "white", textDecoration: "none" }}
-                        onClick={signout}
+                        onClick={signUserOut}
                       >
                         Logout
                       </Link>

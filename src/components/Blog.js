@@ -6,7 +6,10 @@ import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 
-export default function Blog({byme,title,content,author,user}) {
+export default function Blog({id,byme,title,content,author,user,deleteBlog}) {
+  React.useEffect(()=>{
+    console.log(deleteBlog)
+  },[])
   return (
     <Card sx={{ }} style={{width:'100%',boxShadow:'0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)',margin:'20px'}}>
       <CardMedia
@@ -28,7 +31,8 @@ export default function Blog({byme,title,content,author,user}) {
           by {byme? 'me': author?author:user}
           
           </Button>
-        <Button size="small">Read more....</Button>
+          {deleteBlog?<Button size="small" onClick={()=>deleteBlog(id)}>Delete</Button>:<></>}
+        
       </CardActions>
     </Card>
   );

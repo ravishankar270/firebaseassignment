@@ -17,12 +17,12 @@ function App() {
     signOut(auth).then(()=>{
       localStorage.clear()
       setAuth(false)
-      window.location.pathname='/login'
+      window.location.href='/login'
     })
   }
   return (
     <Router>
-      <NavBar user={user} auth={isAuth} signout={signUserOut}/>
+      <NavBar user={user} auth1={isAuth} setAuth={setAuth} setUser={setUser}/>
       <Routes>
         <Route path='/' element={<Home auth1={isAuth} user={user}/>} />
         <Route path='/login' element={<Login setUser={setUser} setAuth={setAuth}/>} />
